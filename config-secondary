@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4
+set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -30,7 +30,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -46,7 +46,7 @@ bindsym $mod+d exec dmenu_run
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+odiaeresis focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -58,7 +58,7 @@ bindsym $mod+Right focus right
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+odiaeresis move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -134,7 +134,7 @@ mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym odiaeresis resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -149,79 +149,41 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#         status_command i3status
-# }
-
-#Custom
-for_window [class="^.*"] border pixel
-gaps inner 10
-gaps outer 0
-
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner all plus 5
-        bindsym minus gaps inner all minus 5
-        bindsym 0     gaps inner all set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer all plus 5
-        bindsym minus gaps outer all minus 5
-        bindsym 0     gaps outer all set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-# smart_gaps on
-
-# Custom exec
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id compton
-exec_always --no-startup-id feh --bg-fill ~/Documents/Other/space.jpg
-
 # Custom Bindings
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym $mod+shift+x exec --no-startup-id i3lock-fancy -gd -t ""
 
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec "light -U 5 # decrease screen brightness
+# Wallpaper
+exec_always --no-startup-id feh --bg-fill ~/backgrounds/background.png
 
-# Touchpad controls
-bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+# Gaps
+for_window [class="^.*"] border pixel 
+gaps outer 10
+gaps inner 20
+smart_gaps on
 
-# Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+# Borders
+# class                  border  backgr  text     indicator child_border
+client.focused           #263238 #2f3d44 #cfd8dc  #263238   #263238
+client.focused_inactive  #151b1e #2f3d44 #b2babd  #151b1e   #151b1e
+client.unfocused         #151b1e #222d32 #b2babd  #2f3d44   #151b1e
+client.urgent            #03a9f4 #2f3d44 #ffffff  #2f3d44   #03a9f4
 
-# On Startup
-exec_always google-chrome
+# Font
+font xft:Tamsyn 8
 
+# Polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# Auto Internet
+exec_always --no-startup-id wicd-gtk -t
+
+# Composite Manager (for Transparency)
+exec_always --no-startup-id compton
+
+# Audio Keys (for Audio Management)
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 2%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 2%-
+bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
+
+# Notifications with Dunst
+exec_always --no-startup-id dunst
