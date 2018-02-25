@@ -1,0 +1,68 @@
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 632,
+       "width": 1184,
+       "x": 0,
+       "y": 0
+    },
+    "name": "jliu@localhost:~/.config/i3",
+    "percent": 0.5,
+    "swallows": [
+       {
+        "class": "^gnome-terminal$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 632,
+               "width": 1184,
+               "x": 0,
+               "y": 0
+            },
+            "name": "jliu@localhost:~",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "class": "^gnome-terminal$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 632,
+               "width": 1184,
+               "x": 0,
+               "y": 0
+            },
+            "name": "jliu@localhost:~/.config",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "class": "^gnome-terminal$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
